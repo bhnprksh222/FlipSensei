@@ -1,0 +1,31 @@
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+fix = true
+show-fixes = true
+
+# Enable common flake8 rule sets
+select = [
+  "E",   # pycodestyle errors
+  "F",   # pyflakes
+  "I",   # isort (imports)
+  "B",   # bugbear
+  "UP",  # pyupgrade
+]
+
+ignore = [
+  "E203", # whitespace before :
+]
+
+exclude = [
+  ".git",
+  ".venv",
+  "__pycache__",
+  "build",
+  "dist",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"

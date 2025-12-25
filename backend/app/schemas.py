@@ -1,24 +1,33 @@
-from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, Literal
+from pydantic import BaseModel, Field, HttpUrl, field_validator
 
 
 class ListingRequest(BaseModel):
-    """
-    Incoming listing data scraped from Facebook Marketplace
-    """
-    title: str = Field(..., description="Product title")
-    price: float = Field(..., gt=0, description="Listing price")
+    title: str = Field(..., min_length=1, description="Product title")
+    price: float = Field(..., gt=0, description="Listing price (numeric)")
     location: Optional[str] = Field(None, description="Listing location")
-    url: str = Field(..., description="Marketplace listing URL")
+    url: HttpUrl = Field(..., description="Facebook Marketplace item URL")
+
+    @field_validator("url")
+    @classmethod
+    def validate_marketplace_item_url(cls, value: HttpUrl):
+        s = str(value)
+        if "/marketplace/item/" not in s:
+            raise ValueError(
+                "url must be a Facebook Marketplace item link \
+            (/marketplace/item/...)"
+            )
+        return value
+
+
+Recommendation = Literal["GOOD_FLIP", "MAYBE", "PASS"]
+Confidence = Literal["LOW", "MEDIUM", "HIGH"]
 
 
 class AnalysisResponse(BaseModel):
-    """
-    Result of flip analysis
-    """
     estimated_resale_price: float
     estimated_profit: float
     roi_percent: float
-    recommendation: str
-    confidence: str
+    recommendation: Recommendation
+    confidence: Confidence
     notes: str
