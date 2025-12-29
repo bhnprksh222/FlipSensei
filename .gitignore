@@ -100,3 +100,5 @@ secrets.json
 *.config.json
 .env
 .env.json
+
+.ruff_cache

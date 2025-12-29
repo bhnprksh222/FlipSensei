@@ -1,11 +1,12 @@
-from typing import Optional, Literal
+from typing import Literal
+
 from pydantic import BaseModel, Field, HttpUrl, field_validator
 
 
 class ListingRequest(BaseModel):
     title: str = Field(..., min_length=1, description="Product title")
     price: float = Field(..., gt=0, description="Listing price (numeric)")
-    location: Optional[str] = Field(None, description="Listing location")
+    location: str | None = Field(None, description="Listing location")
     url: HttpUrl = Field(..., description="Facebook Marketplace item URL")
 
     @field_validator("url")

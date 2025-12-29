@@ -1,7 +1,8 @@
 from fastapi import APIRouter
-from app.schemas import ListingRequest, AnalysisResponse
-from app.services.evaluator import evaluate_listing
+
 from app.errors import InternalServiceError
+from app.schemas import AnalysisResponse, ListingRequest
+from app.services.evaluator import evaluate_listing
 
 router = APIRouter()
 

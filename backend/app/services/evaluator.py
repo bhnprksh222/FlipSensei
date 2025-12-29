@@ -1,5 +1,5 @@
-from app.schemas import ListingRequest, AnalysisResponse
 from app.errors import EvaluationError
+from app.schemas import AnalysisResponse, ListingRequest
 
 
 def evaluate_listing(listing: ListingRequest) -> AnalysisResponse:
